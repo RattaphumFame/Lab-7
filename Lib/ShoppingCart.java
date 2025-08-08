@@ -53,6 +53,9 @@ public class ShoppingCart {
      */
     public void addItem(String productId, int quantity) throws ProductNotFoundException {
         Product p = productCatalog.findById(productId);
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be possitive");
+        }
         for (CartItem item : items) {
             if (item.getProduct().equals(p)) {
                 item.increaseQuantity(quantity);
@@ -69,7 +72,9 @@ public class ShoppingCart {
      * @param productId รหัสของสินค้าที่ต้องการลบ
      */
     public void removeItem(String productId)throws InvaidOperationException {
-        if (productId == null) return;
+        if (productId == null){
+        throw new InvaidOperationException("Not found Product Id");
+        }
         CartItem itemToRemove = null;
         for (CartItem item : items) {
             if (item.getProduct().getProductId().equals(productId)) {
